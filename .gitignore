@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.env
+.env.local
+patients_db.json
+alerts_db.json
+*.log
+.DS_Store
