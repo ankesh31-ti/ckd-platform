@@ -5,6 +5,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { mockPatients } from './data/mockData.js';
 import { recalculatePatient } from './services/riskEngine.js';
+import { getMLPrediction } from './services/mlService.js';
 import { Patient, Alert } from '../frontend/src/types/index.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -133,12 +134,22 @@ app.get('/api/patients/:id', (req, res) => {
 });
 
 // POST save/update patient → recalculate risk
-app.post('/api/patients/:id', (req, res) => {
+app.post('/api/patients/:id', async (req, res) => {
   const patients = loadPatients();
   const idx = patients.findIndex(p => p.id === req.params.id);
   if (idx === -1) return res.status(404).json({ error: 'Patient not found' });
 
-  const updated = recalculatePatient({ ...patients[idx], ...req.body });
+  let updated = recalculatePatient({ ...patients[idx], ...req.body });
+
+  // Run the ML engine alongside the existing KDIGO rule engine.
+  // This never blocks or breaks the existing flow - if the ML service
+  // is unreachable or the patient lacks the extra fields, mlAssessment
+  // simply stays undefined and everything else works exactly as before.
+  const mlResult = await getMLPrediction(updated);
+  if (mlResult) {
+    updated = { ...updated, mlAssessment: mlResult };
+  }
+
   patients[idx] = updated;
   savePatients(patients);
 
