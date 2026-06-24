@@ -19,6 +19,19 @@ export interface LabResult {
   ferritin: number;
   tsat: number;
   albumin: number;
+  // ML model fields (UCI dataset features)
+  urineSpecificGravity?: number;
+  urineAlbuminDipstick?: number;
+  urineSugar?: number;
+  rbcUrine?: 'normal' | 'abnormal';
+  pusCells?: 'normal' | 'abnormal';
+  pusCellClumps?: 'present' | 'notpresent';
+  bacteria?: 'present' | 'notpresent';
+  bloodGlucoseRandom?: number;
+  wbcCount?: number;
+  rbcCount?: number;
+  appetite?: 'good' | 'poor';
+  pedalEdema?: boolean;
 }
 
 export interface VitalReading {
@@ -60,6 +73,13 @@ export interface Patient {
   medications: Medication[];
   comorbidities: Comorbidities;
   lastUpdated: string;
+  mlAssessment?: {
+    prediction: 'ckd' | 'notckd';
+    predictionBinary: number;
+    confidenceCkd: number;
+    modelVersion: string;
+    timestamp: string;
+  };
 }
 
 export interface Alert {
