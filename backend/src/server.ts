@@ -6,7 +6,7 @@ import { fileURLToPath } from 'url';
 import { mockPatients } from './data/mockData.js';
 import { recalculatePatient } from './services/riskEngine.js';
 import { getMLPrediction } from './services/mlService.js';
-import { Patient, Alert } from '../frontend/src/types/index.js';
+import { Patient, Alert } from './types.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
