@@ -1,5 +1,4 @@
-import { Patient } from '../../frontend/src/types';
-
+import { Patient } from '../types.js';
 function daysAgo(n: number): string {
   const d = new Date();
   d.setDate(d.getDate() - n);
