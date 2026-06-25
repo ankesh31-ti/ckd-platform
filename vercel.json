@@ -1,1 +1,1 @@
-{"buildCommand":"cd ckd-platform/frontend && npm install && npm run build","outputDirectory":"ckd-platform/frontend/dist","installCommand":"echo skip","rewrites":[{"source":"/(.*)", "destination":"/index.html"}]}
+{"buildCommand":"cd frontend && npm install && npm run build","outputDirectory":"frontend/dist","installCommand":"echo skip","rewrites":[{"source":"/(.*)", "destination":"/index.html"}]}
