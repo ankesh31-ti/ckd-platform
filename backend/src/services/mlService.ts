@@ -1,5 +1,4 @@
-import { Patient, LabResult } from '../../frontend/src/types/index.js';
-
+import { Patient, LabResult } from '../types.js';
 const ML_SERVICE_URL = process.env.ML_SERVICE_URL || 'http://localhost:8000';
 
 export interface MLPredictionResult {
